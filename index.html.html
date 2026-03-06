@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <title>🔮 试试你是不是INTJ要找的人</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: linear-gradient(145deg, #e8eef9 0%, #d5dff0 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            margin: 0;
+        }
+
+        .test-card {
+            max-width: 750px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 3rem 3rem 2.5rem 2.5rem;
+            box-shadow: 0 30px 50px rgba(0, 20, 40, 0.15), 0 10px 20px rgba(0, 0, 0, 0.05), inset 2px 2px 5px rgba(255, 255, 255, 0.6);
+            padding: 2.5rem 2rem;
+            border: 1px solid rgba(220, 235, 255, 0.7);
+            transition: all 0.2s ease;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: #1e2b3c;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-bottom: 0.3rem;
+            border-left: 8px solid #5f7b9c;
+            padding-left: 1.5rem;
+            line-height: 1.2;
+        }
+
+        h1 span {
+            background: #5f7b9c;
+            color: white;
+            font-size: 1.2rem;
+            border-radius: 40px;
+            padding: 0.2rem 1rem;
+            margin-left: 0.5rem;
+            white-space: nowrap;
+        }
+
+        .subhead {
+            color: #4e5f72;
+            margin-bottom: 2rem;
+            font-size: 1rem;
+            font-weight: 400;
+            padding-left: 2.2rem;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="%236f8aa9" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M5 20v-2a7 7 0 0 1 14 0v2"/></svg>') left center no-repeat;
+            background-size: 1.3rem;
+        }
+
+        .progress-section {
+            background: #cddae9;
+            border-radius: 60px;
+            height: 12px;
+            margin: 2rem 0 1rem 0;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .progress-fill {
+            height: 12px;
+            border-radius: 60px;
+            background: linear-gradient(90deg, #6f8ab0, #425c7c);
+            width: 0%;
+            transition: width 0.3s ease;
+            box-shadow: 0 0 10px #7f9bc0;
+        }
+
+        .step-indicator {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 2rem;
+            color: #2d4055;
+            font-weight: 500;
+        }
+        .question-count {
+            background: #b7c9df;
+            padding: 0.3rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            color: #1f2e3f;
+        }
+
+        .question-box {
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 2.5rem;
+            padding: 2rem 1.8rem;
+            box-shadow: 0 8px 22px rgba(75, 100, 130, 0.1);
+            margin-bottom: 2.2rem;
+            border: 1px solid #ffffff;
+        }
+
+        .question-text {
+            font-size: 1.7rem;
+            font-weight: 600;
+            line-height: 1.3;
+            color: #1f2e41;
+            margin-bottom: 2rem;
+            word-break: break-word;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .option-btn {
+            background: white;
+            border: 2px solid transparent;
+            border-radius: 2rem;
+            padding: 1.1rem 0.8rem;
+            font-size: 1.05rem;
+            font-weight: 500;
+            color: #1f2e41;
+            text-align: center;
+            box-shadow: 0 6px 12px rgba(80, 100, 130, 0.08);
+            transition: all 0.15s;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1.3;
+            word-break: break-word;
+            backdrop-filter: blur(4px);
+            border-color: #d7e3f5;
+        }
+
+        .option-btn:hover {
+            background: #f5faff;
+            transform: scale(1.02);
+            border-color: #6f8ab0;
+            box-shadow: 0 12px 18px rgba(90, 120, 160, 0.15);
+        }
+
+        .option-btn.selected {
+            background: #425c7c;
+            border-color: #263b54;
+            color: white;
+            font-weight: 600;
+            box-shadow: 0 10px 20px #425c7c80;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .nav-btn {
+            background: white;
+            border: none;
+            border-radius: 3rem;
+            padding: 1rem 2.2rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #2d4055;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.02), 0 0 0 1px #cddae9;
+            cursor: pointer;
+            transition: 0.15s;
+            flex: 1;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-btn:not(:disabled):hover {
+            background: #ecf2fa;
+            box-shadow: 0 8px 18px rgba(75, 100, 130, 0.15), 0 0 0 1px #8fa6c2;
+            color: #1f2e41;
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.35;
+            cursor: not-allowed;
+            background: #d7e0ea;
+            color: #5e6f82;
+            box-shadow: none;
+        }
+
+        .nav-btn.next {
+            background: #425c7c;
+            color: white;
+            box-shadow: 0 8px 18px #425c7c80;
+        }
+        .nav-btn.next:not(:disabled):hover {
+            background: #314b69;
+            box-shadow: 0 12px 24px #314b69b0;
+        }
+
+        .result-box {
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 2.5rem;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            backdrop-filter: blur(8px);
+            border: 2px solid #c0d2e8;
+        }
+
+        .result-emoji {
+            font-size: 4.5rem;
+            margin-bottom: 0.5rem;
+            filter: drop-shadow(0 8px 12px #b0c6dd);
+        }
+
+        .result-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1f2e41;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+
+        .match-percent {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(145deg, #425c7c, #1f2e41);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 0.2rem 0 0.8rem;
+            letter-spacing: 2px;
+        }
+
+        .result-desc {
+            font-size: 1.2rem;
+            color: #2d4055;
+            background: #eef4fc;
+            padding: 1.8rem;
+            border-radius: 2rem;
+            margin: 1.8rem 0;
+            line-height: 1.6;
+            text-align: left;
+            border: 1px solid #b9cee8;
+        }
+
+        .restart-btn {
+            background: #8fa6c2;
+            border: none;
+            border-radius: 3rem;
+            padding: 1.2rem 2.5rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: white;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            margin-top: 0.5rem;
+            cursor: pointer;
+            box-shadow: 0 6px 0 #617a9a;
+            transition: all 0.1s;
+            width: auto;
+            border: 1px solid #dae6f5;
+        }
+
+        .restart-btn:active {
+            transform: translateY(5px);
+            box-shadow: 0 2px 0 #617a9a;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .footer-note {
+            margin-top: 2rem;
+            color: #7f94ad;
+            font-size: 0.85rem;
+            text-align: center;
+        }
+
+        @media (max-width: 550px) {
+            .test-card { padding: 1.8rem 1.2rem; }
+            h1 { font-size: 1.9rem; }
+            .question-text { font-size: 1.4rem; }
+            .options-grid { grid-template-columns: 1fr; }
+            .option-btn { padding: 1rem; }
+            .nav-btn { padding: 0.8rem 1.2rem; font-size: 1rem; }
+            .result-title { font-size: 2rem; }
+            .match-percent { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="test-card" role="main">
+        <h1>
+            🧠 INTJ 兼容性测试
+            <span>试试你是不是INTJ要找的人</span>
+        </h1>
+        <div class="subhead">10道题 · 揭开你与战略大师的契合度</div>
+
+        <div class="progress-section">
+            <div class="progress-fill" id="progressFill" style="width: 0%;"></div>
+        </div>
+        <div class="step-indicator">
+            <span class="question-count" id="stepCounter">第 1 / 10 题</span>
+            <span style="opacity:0.7;">🤔 直觉作答即可</span>
+        </div>
+
+        <!-- 题目区域 -->
+        <div id="questionArea">
+            <div class="question-box">
+                <div class="question-text" id="questionText">加载中...</div>
+                <div class="options-grid" id="optionsContainer"></div>
+            </div>
+
+            <div class="nav-buttons">
+                <button class="nav-btn" id="prevBtn" disabled>◀ 上一题</button>
+                <button class="nav-btn next" id="nextBtn" disabled>下一题 ▶</button>
+            </div>
+        </div>
+
+        <!-- 结果区域 (初始隐藏) -->
+        <div id="resultArea" class="result-box hidden">
+            <div class="result-emoji" id="resultEmoji">🧩</div>
+            <div class="result-title" id="resultLabel">INTJ 匹配分析</div>
+            <div class="match-percent" id="resultPercent">0%</div>
+            <div class="result-desc" id="resultDescription">详细描述...</div>
+            <button class="restart-btn" id="restartBtn">🔄 重新测试</button>
+        </div>
+
+        <div class="footer-note">—— INTJ 想要的是深度共鸣 ——</div>
+    </div>
+
+    <script>
+        (function() {
+            // ---------- 题库数据：10个问题，每个选项带分数 (0~3, 越高越符合INTJ理想) ----------
+            const questions = [
+                {
+                    text: "① 你是否喜欢独自思考复杂问题，并享受这个过程？",
+                    options: [
+                        { text: "🔍 非常享受，经常沉浸其中", score: 3 },
+                        { text: "📘 比较喜欢，但也会找人讨论", score: 2 },
+                        { text: "💬 一般，更愿意和人一起想", score: 1 },
+                        { text: "🎉 不太喜欢，觉得枯燥", score: 0 }
+                    ]
+                },
+                {
+                    text: "② 做决定时，你更依赖逻辑分析还是内心感受？",
+                    options: [
+                        { text: "⚖️ 几乎总是逻辑优先", score: 3 },
+                        { text: "📊 多数情况靠逻辑，偶尔凭感觉", score: 2 },
+                        { text: "💖 经常凭感觉，但也考虑逻辑", score: 1 },
+                        { text: "🌊 几乎完全跟着感受走", score: 0 }
+                    ]
+                },
+                {
+                    text: "③ 你对未来5-10年有清晰的长期规划吗？",
+                    options: [
+                        { text: "🗺️ 有非常详细的人生规划", score: 3 },
+                        { text: "📌 有大方向，但细节模糊", score: 2 },
+                        { text: "🌫️ 只有短期打算", score: 1 },
+                        { text: "🍃 随遇而安，很少规划", score: 0 }
+                    ]
+                },
+                {
+                    text: "④ 你享受深入探讨抽象概念（比如哲学、科学理论）吗？",
+                    options: [
+                        { text: "🌟 非常热衷，能聊一整天", score: 3 },
+                        { text: "📚 有点兴趣，但需要氛围", score: 2 },
+                        { text: "☕ 偶尔听听还行", score: 1 },
+                        { text: "😴 完全无感，觉得无聊", score: 0 }
+                    ]
+                },
+                {
+                    text: "⑤ 你容易被别人的情绪影响吗？（反向）",
+                    options: [
+                        { text: "🛡️ 几乎不受影响，很理性", score: 3 },
+                        { text: "⚖️ 偶尔会被感染", score: 2 },
+                        { text: "😢 经常感受到并受影响", score: 1 },
+                        { text: "💔 极易共情，难以抽离", score: 0 }
+                    ]
+                },
+                {
+                    text: "⑥ 你说话直接，不喜欢拐弯抹角？",
+                    options: [
+                        { text: "🎯 非常直接，效率第一", score: 3 },
+                        { text: "📢 比较直接，但会看场合", score: 2 },
+                        { text: "🤐 通常委婉，避免冲突", score: 1 },
+                        { text: "🌿 极力委婉，照顾感受", score: 0 }
+                    ]
+                },
+                {
+                    text: "⑦ 你对知识和自我提升的渴望有多强？",
+                    options: [
+                        { text: "🔥 极度渴望，每天都在学习", score: 3 },
+                        { text: "📈 很有动力，经常充电", score: 2 },
+                        { text: "⏳ 一般，有需要才学", score: 1 },
+                        { text: "🛋️ 没什么兴趣，够用就行", score: 0 }
+                    ]
+                },
+                {
+                    text: "⑧ 你能长时间独处而不感到孤独或无聊吗？",
+                    options: [
+                        { text: "🏝️ 完全可以，独处是享受", score: 3 },
+                        { text: "📖 可以，但偶尔需要社交", score: 2 },
+                        { text: "👥 一般，更喜欢有人陪", score: 1 },
+                        { text: "💔 很难，需要人围绕", score: 0 }
+                    ]
+                },
+                {
+                    text: "⑨ 在效率和人情之间，你通常更看重？",
+                    options: [
+                        { text: "⚡ 效率优先，结果最重要", score: 3 },
+                        { text: "🔁 视情况，尽量平衡", score: 2 },
+                        { text: "🤝 人情优先，关系要紧", score: 1 },
+                        { text: "💞 永远把人情放第一位", score: 0 }
+                    ]
+                },
+                {
+                    text: "⑩ 你对他人低效或愚蠢的行为容忍度如何？",
+                    options: [
+                        { text: "⛔ 容忍度极低，容易烦躁", score: 3 },
+                        { text: "😐 较低，但会保持礼貌", score: 2 },
+                        { text: "🙂 较高，能理解包容", score: 1 },
+                        { text: "😇 非常高，几乎不在意", score: 0 }
+                    ]
+                }
+            ];
+
+            // 四个结果档次 (百分比和描述)
+            const resultLevels = [
+                { percent: "0%", emoji: "🌪️", label: "完全不匹配", 
+                  desc: "你和INTJ简直是两个世界的人。他们理性、独立、追求深度，而你似乎更随性、感性或注重当下。如果非要在一起，可能会互相折磨——INTJ会觉得你不够深刻，你可能觉得他们冷漠无情。建议保持距离，做普通朋友就好。" },
+                { percent: "50%", emoji: "🌓", label: "部分契合", 
+                  desc: "你有某些INTJ欣赏的特质，比如偶尔的理性和独立，但本质上差异不小。或许能成为不错的朋友或同事，但作为亲密伴侣还需要大量磨合。INTJ可能会被你的某些优点吸引，却又因你的随意而感到困扰。" },
+                { percent: "80%", emoji: "🌕", label: "高度契合", 
+                  desc: "你已经很接近INTJ的理想型了！你们在思维方式和生活态度上有许多共鸣，能够进行深度交流，也尊重彼此的独立空间。INTJ会觉得你是个难得的、可以并肩探索世界的人。只要再注意一点点细节，就能成为灵魂伴侣。" },
+                { percent: "100%", emoji: "💎", label: "灵魂伴侣", 
+                  desc: "恭喜！你就是INTJ要找的那个人。你理性而不失温度，独立又懂得深度连接，既有长远眼光又保持逻辑清晰。INTJ会视你为最珍贵的伙伴，你们可以一起规划未来、探讨思想，并在彼此的世界里找到真正的理解。这样的匹配可遇不可求！" }
+            ];
+
+            // ---------- 状态 ----------
+            const totalQuestions = questions.length; // 10
+            let currentStep = 0;
+            let answers = new Array(totalQuestions).fill(-1); // 每题所选选项的索引，-1表示未选
+
+            // DOM 元素
+            const questionArea = document.getElementById('questionArea');
+            const resultArea = document.getElementById('resultArea');
+            const questionText = document.getElementById('questionText');
+            const optionsContainer = document.getElementById('optionsContainer');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const stepCounter = document.getElementById('stepCounter');
+            const progressFill = document.getElementById('progressFill');
+            const restartBtn = document.getElementById('restartBtn');
+
+            // 结果元素
+            const resultEmoji = document.getElementById('resultEmoji');
+            const resultLabel = document.getElementById('resultLabel');
+            const resultPercent = document.getElementById('resultPercent');
+            const resultDescription = document.getElementById('resultDescription');
+
+            // ---------- 辅助函数 ----------
+            function countAnswered() {
+                return answers.filter(a => a !== -1).length;
+            }
+
+            function updateProgressAndCounter() {
+                const answered = countAnswered();
+                const percent = (answered / totalQuestions) * 100;
+                progressFill.style.width = percent + '%';
+                stepCounter.textContent = `第 ${currentStep + 1} / ${totalQuestions} 题`;
+            }
+
+            function renderQuestion() {
+                const q = questions[currentStep];
+                questionText.textContent = q.text;
+
+                let htmlStr = '';
+                q.options.forEach((opt, idx) => {
+                    const selectedClass = (answers[currentStep] === idx) ? 'selected' : '';
+                    htmlStr += `<button class="option-btn ${selectedClass}" data-option-index="${idx}">${opt.text}</button>`;
+                });
+                optionsContainer.innerHTML = htmlStr;
+
+                // 更新导航按钮状态
+                prevBtn.disabled = (currentStep === 0);
+                const hasCurrentAnswer = answers[currentStep] !== -1;
+                nextBtn.disabled = !hasCurrentAnswer;
+
+                if (currentStep === totalQuestions - 1) {
+                    nextBtn.textContent = '🔎 查看结果';
+                } else {
+                    nextBtn.textContent = '下一题 ▶';
+                }
+
+                updateProgressAndCounter();
+            }
+
+            // 选项点击
+            optionsContainer.addEventListener('click', (e) => {
+                const target = e.target.closest('.option-btn');
+                if (!target) return;
+
+                const optionIndex = parseInt(target.dataset.optionIndex, 10);
+                if (isNaN(optionIndex)) return;
+
+                if (answers[currentStep] === optionIndex) return; // 已选中则不变
+
+                answers[currentStep] = optionIndex;
+                renderQuestion();
+            });
+
+            prevBtn.addEventListener('click', () => {
+                if (currentStep > 0) {
+                    currentStep--;
+                    renderQuestion();
+                }
+            });
+
+            nextBtn.addEventListener('click', () => {
+                if (answers[currentStep] === -1) return; // 安全防护 (按钮disabled已处理)
+
+                if (currentStep === totalQuestions - 1) {
+                    showResult();
+                } else {
+                    currentStep++;
+                    renderQuestion();
+                }
+            });
+
+            // ---------- 计算并显示结果 ----------
+            function showResult() {
+                // 确保所有题目已答 (以防万一)
+                if (answers.includes(-1)) {
+                    const firstMissing = answers.indexOf(-1);
+                    if (firstMissing !== -1) {
+                        currentStep = firstMissing;
+                        renderQuestion();
+                        alert('还有题目没有完成，请继续作答 ✍️');
+                        return;
+                    }
+                }
+
+                // 计算总分 (每题得分0-3)
+                let totalScore = 0;
+                answers.forEach((ansIdx, qIdx) => {
+                    totalScore += questions[qIdx].options[ansIdx].score;
+                });
+
+                // 总分范围 0 ~ 30，划分四个区间
+                let level;
+                if (totalScore <= 6) {
+                    level = resultLevels[0]; // 0%
+                } else if (totalScore <= 15) {
+                    level = resultLevels[1]; // 50%
+                } else if (totalScore <= 24) {
+                    level = resultLevels[2]; // 80%
+                } else {
+                    level = resultLevels[3]; // 100%
+                }
+
+                // 填充结果区域
+                resultEmoji.textContent = level.emoji;
+                resultLabel.textContent = level.label;
+                resultPercent.textContent = level.percent;
+                resultDescription.textContent = level.desc;
+
+                // 隐藏题目区，显示结果区
+                questionArea.classList.add('hidden');
+                resultArea.classList.remove('hidden');
+            }
+
+            // ---------- 重新测试 ----------
+            restartBtn.addEventListener('click', () => {
+                answers.fill(-1);
+                currentStep = 0;
+                resultArea.classList.add('hidden');
+                questionArea.classList.remove('hidden');
+                renderQuestion();
+            });
+
+            // ---------- 初始化 ----------
+            window.addEventListener('load', () => {
+                renderQuestion();
+            });
+        })();
+    </script>
+</body>
+</html>
